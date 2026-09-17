@@ -180,7 +180,16 @@ h1.lede{font-weight:300;}
 /* full-bleed photographic band */
 .band{margin:0;line-height:0;}
 .band img{width:100%;height:clamp(320px,54vw,640px);object-fit:cover;}
-#crescent .band img{object-position:50% 46%;}
+/* the product band runs the full height of the screen */
+#crescent .band img{height:100svh;object-position:50% 46%;}
+
+/* A 16:9 frame cannot fill a portrait viewport: at 100svh on a phone only ~26%
+   of the frame width survives and the bag is sliced down the middle. This is
+   the tallest the band can be while the whole bag stays in shot. Delete this
+   block to crop hard on phones too. */
+@media(max-width:760px){
+  #crescent .band img{height:58svh;}
+}
 #name .band img{object-position:50% 56%;}
 
 .head{
