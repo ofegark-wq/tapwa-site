@@ -11,9 +11,23 @@
   --on-image-soft:#3A4247;
 
   --display:'Jost','Futura','Avenir Next',system-ui,sans-serif;
+  --mark:'Galliard','Newsreader',Georgia,serif;
   --body:'Newsreader',Georgia,'Times New Roman',serif;
 
   --gutter:clamp(16px,4vw,48px);
+}
+
+/* The wordmark face. Single weight (Roman), self-hosted from the project's
+   own font file — so it renders for every visitor, not only on a Mac that
+   happens to have it installed. */
+@font-face{
+  font-family:'Galliard';
+  src:url('../assets/fonts/galliard-roman.otf') format('opentype');
+  font-weight:400;font-style:normal;
+  /* block, not swap: the mark is pinned to 80% of the viewport using a ratio
+     measured from THIS face, so swapping in from a fallback would flash the
+     wordmark at the wrong width in the wrong face. Better a beat of nothing. */
+  font-display:block;
 }
 
 *{box-sizing:border-box;}
@@ -117,11 +131,12 @@ img,video{max-width:100%;display:block;}
 }
 .copy.center .eyebrow{position:absolute;left:0;right:0;top:clamp(74px,11vh,120px);margin:0;}
 /* bottom:10% puts the BOX bottom on the plinth line, but the baseline sits
-   0.1155em above that (measured). The correction is in em so it scales with
-   the font-size, which is itself in vw — otherwise the seating would drift
-   with the viewport's aspect ratio. */
+   0.1199em above that (measured, Galliard). The correction is in em so it
+   scales with the font-size, which is itself in vw — otherwise the seating
+   would drift with the viewport's aspect ratio. Face-specific: it was .1155em
+   under Jost. */
 .wordmark{position:absolute;left:0;right:0;bottom:10%;z-index:11;
-  transform:translateY(.1155em);opacity:0;pointer-events:none;
+  transform:translateY(.1199em);opacity:0;pointer-events:none;
   text-align:center;}   /* it used to inherit centring from .copy.center */
 .mark-foot{position:absolute;left:0;right:0;bottom:clamp(14px,2.4vh,30px);}
 .mark-foot .tagline{margin:0;}
@@ -134,12 +149,13 @@ img,video{max-width:100%;display:block;}
    colour first, stroke second: without -webkit-text-stroke a transparent fill
    would render the brand name invisible, so the solid colour is the fallback. */
 .wordmark{
-  font-family:var(--display);font-weight:500;
-  /* 80% of the viewport, exactly. This face renders TAPWA at 3.5818x its
+  font-family:var(--mark);font-weight:400;
+  /* 80% of the viewport, exactly. Galliard renders TAPWA at 4.131x its
      font-size (measured, and constant because the tracking is in em), so
-     0.80 / 3.5818 = 0.22335. Deliberately unclamped: clamping would break the
-     ratio at the extremes, and 80% was the ask. */
-  font-size:22.335vw;
+     0.80 / 4.131 = 0.19366. Deliberately unclamped: clamping would break the
+     ratio at the extremes, and 80% was the ask. Re-measure this if the face
+     or the tracking changes — it was 22.335vw under Jost. */
+  font-size:19.366vw;
   line-height:.92;letter-spacing:.06em;
   margin:0;white-space:nowrap;
   color:var(--on-image);
