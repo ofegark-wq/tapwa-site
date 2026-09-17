@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TAPWA — The Crescent</title>
+<meta name="description" content="TAPWA. Full-grain leather bags, cut by hand. Carried, not saved.">
+
+<meta property="og:title" content="TAPWA — The Crescent">
+<meta property="og:description" content="Full-grain leather, cut by hand. Carried, not saved.">
+<meta property="og:image" content="assets/poster.jpg">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="bar">
+  <a class="mark" href="#top">TAPWA</a>
+  <p class="reel">Reel 01 — The Crescent</p>
+  <p class="pron">TAP-wah</p>
+</header>
+
+<!-- The track is a tall spacer. The stage sticks to the viewport while you
+     scroll through it, and scroll position drives the video's currentTime. -->
+<main id="top" class="track">
+  <div class="stage">
+    <video id="hero" class="hero" poster="assets/poster.jpg" muted playsinline preload="auto"></video>
+    <div class="veil" aria-hidden="true"></div>
+
+    <div class="copy left" data-beat="0">
+      <p class="eyebrow">The Crescent</p>
+      <h1 class="lede">Carried,<br>not saved.</h1>
+      <p class="cue">Scroll</p>
+    </div>
+
+    <div class="copy right" data-beat="1">
+      <p class="eyebrow">Made</p>
+      <p class="lede">One hide.<br>Cut by hand.</p>
+      <p class="sub">Full-grain leather, edges painted and burnished by hand, gold-tone hardware set flush to the body.</p>
+    </div>
+
+    <div class="copy left" data-beat="2">
+      <p class="eyebrow">Priced</p>
+      <p class="lede">You pay for the leather and the hands that cut it.</p>
+      <p class="sub">The rest is grace.</p>
+    </div>
+
+    <div class="copy right" data-beat="3">
+      <p class="eyebrow">Tapwa — of God</p>
+      <p class="lede">Named for its maker.</p>
+      <p class="sub">A Bwatiye name from Adamawa, carried to Canada by the woman whose work this is.</p>
+    </div>
+
+    <div class="copy left" data-beat="4">
+      <p class="lede">The Crescent</p>
+      <p class="spec">Full-grain · Hand-cut · Designed in Canada</p>
+      <a class="cta" href="#enquire">Enquire</a>
+    </div>
+
+    <div class="progress" id="progress" aria-hidden="true"></div>
+  </div>
+</main>
+
+<section class="after" id="enquire">
+  <h2>The Crescent</h2>
+  <p>A half-moon shoulder bag in full-grain pebbled leather, with a padded top handle and a detachable crossbody strap. Made in a run of fifty.</p>
+  <p class="spec">Full-grain leather · Hand-painted edges · Gold-tone hardware · Designed in Canada</p>
+</section>
+
+<footer class="foot">
+  <p class="mark-sm">TAPWA</p>
+  <p class="meaning">of God — a Bwatiye name from Adamawa, Nigeria</p>
+</footer>
+
+<script src="js/scroll.js"></script>
+</body>
+</html>
