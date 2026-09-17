@@ -4,17 +4,32 @@ A one-page site whose hero is a video scrubbed by scroll position. No framework,
 
 ## Run it
 
-Open `index.html` in a browser. That's it — but Safari and Chrome both restrict some video behaviour on `file://` URLs, so for a truthful test serve it:
+```bash
+python3 serve.py 8000
+# then open http://localhost:8000
+```
+
+**Use `serve.py`, not `python3 -m http.server`.** The stock module ignores the
+`Range` header and answers `200` with the whole file. Browsers read that as
+"this video cannot be seeked": assigning `video.currentTime` silently does
+nothing, and the hero sits on its poster frame while you scroll. It looks
+exactly like broken JavaScript. `serve.py` answers `206 Partial Content`, which
+is all the page needs.
+
+Opening `index.html` straight off the disk fails the same way — `file://` URLs
+have no ranges either.
+
+Quick check that seeking works, whatever you serve with:
 
 ```bash
-cd tapwa-site
-python3 -m http.server 8000
-# then open http://localhost:8000
+curl -sD - -o /dev/null -H 'Range: bytes=0-999' http://localhost:8000/assets/hero-scrub.mp4 | head -1
+# want: HTTP/1.0 206 Partial Content   (not 200 OK)
 ```
 
 ## Files
 
 ```
+serve.py          dev server that answers Range requests (see Run it)
 index.html        markup and all the copy
 css/style.css     palette, type, layout
 js/scroll.js      the scroll → video mapping, the copy timings, the header ink
@@ -113,4 +128,10 @@ It's static, so anything will host it. Drag the folder onto [Netlify Drop](https
 npx vercel deploy
 ```
 
-Check the video actually loads on the deployed URL — some hosts need large media committed via Git LFS.
+Check the video actually loads on the deployed URL — some hosts need large
+media committed via Git LFS.
+
+Check it **scrubs**, too, not just that it appears. The host must serve
+`206 Partial Content` for range requests on the MP4; Netlify and Vercel both
+do. A host that answers `200` with the whole file gives you a static poster
+frame and no scroll animation.
