@@ -80,6 +80,18 @@ img,video{max-width:100%;display:block;}
 .bar-cta:hover{color:var(--leather);border-color:currentColor;}
 .bar-cta:focus-visible{outline:2px solid var(--leather);outline-offset:4px;}
 
+/* ---------- touch targets ----------
+   Every link on this page is 11-13px letterspaced type, which is a fine thing
+   to look at and a poor thing to hit with a thumb. On touch devices each one
+   gets an invisible hit area around it — via a pseudo-element, so nothing
+   moves visually and the desktop layout is untouched. */
+@media (hover:none){
+  .mark,.bar-cta,.cta{position:relative;}
+  .mark::after,.bar-cta::after,.cta::after{
+    content:'';position:absolute;inset:-14px -12px;
+  }
+}
+
 /* ---------- the scroll stage ---------- */
 .track{position:relative;height:620svh;}
 .stage{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--ground-2);}
@@ -228,7 +240,10 @@ h1.lede{font-weight:300;}
 .cta:hover{color:var(--leather);}
 .cta:focus-visible,.mark:focus-visible{outline:2px solid var(--leather);outline-offset:4px;}
 
-@media(max-width:760px){
+/* 860, not 760: an iPad is 768 wide and was landing in the desktop layout,
+   where the side beats are min(40ch,38vw) — 292px of body copy in a column
+   beside a heavily cropped video. Portrait tablets belong with phones here. */
+@media(max-width:860px){
   .copy{width:auto;max-width:min(36ch,88vw);top:auto;bottom:13%;transform:none;
     left:0;right:auto;text-align:left;}
   .copy.right{right:auto;left:0;text-align:left;}
@@ -282,15 +297,31 @@ h1.lede{font-weight:300;}
 /* full-bleed photographic band */
 .band{margin:0;line-height:0;}
 .band img{width:100%;height:clamp(320px,54vw,640px);object-fit:cover;}
-/* the product band runs the full height of the screen */
-#crescent .band img{height:100svh;object-position:50% 46%;}
+/* The product band fills the screen where the screen can take it.
 
-/* A 16:9 frame cannot fill a portrait viewport: at 100svh on a phone only ~26%
-   of the frame width survives and the bag is sliced down the middle. This is
-   the tallest the band can be while the whole bag stays in shot. Delete this
-   block to crop hard on phones too. */
-@media(max-width:760px){
-  #crescent .band img{height:58svh;}
+   A 16:9 frame cannot fill a portrait viewport: the taller the box, the less
+   of the frame's WIDTH survives. At 100svh it is 90% on a desktop, 42% on an
+   iPad and 26% on a phone — and the bag spans 40-75% of the frame, so the
+   narrow crops cut it in half.
+
+   Rather than a breakpoint, cap the height by the viewport's own width. The
+   bag needs ~45% of the frame width to stay whole, so the tallest safe box is
+   vw / (0.45 x 1.78) = 1.248vw. Desktops never reach the cap and still run
+   full height; portrait screens take the shorter band automatically, at every
+   size, with no breakpoint to miss.
+
+   object-position x is 57%, not 50%: the bag sits slightly right of centre in
+   this frame, so the crop is centred on the bag rather than on the image. */
+#crescent .band img{
+  /* the bag needs ~50% of the frame width to sit whole with margin, so the
+     tallest safe box is vw / (0.50 x 1.78) = 1.124vw */
+  height:min(100svh, 112.4vw);
+  /* 65%, not 50%. object-position aligns the image's 65% point with the box's
+     65% point; it does not centre a window there. The visible window works out
+     as left = (1 - visible) x position, so landing it on the bag's true centre
+     of 57.5% at the cap needs (0.575 - 0.25) / 0.5 = 0.65. Measured: the bag
+     spans 42%-73% of this frame. */
+  object-position:65% 46%;
 }
 #name .band img{object-position:50% 56%;}
 
