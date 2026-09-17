@@ -150,12 +150,12 @@ img,video{max-width:100%;display:block;}
    would render the brand name invisible, so the solid colour is the fallback. */
 .wordmark{
   font-family:var(--mark);font-weight:400;
-  /* 80% of the viewport, exactly. Galliard renders TAPWA at 4.131x its
+  /* 85% of the viewport, exactly. Galliard renders TAPWA at 4.131x its
      font-size (measured, and constant because the tracking is in em), so
-     0.80 / 4.131 = 0.19366. Deliberately unclamped: clamping would break the
-     ratio at the extremes, and 80% was the ask. Re-measure this if the face
-     or the tracking changes — it was 22.335vw under Jost. */
-  font-size:19.366vw;
+     0.85 / 4.131 = 0.20576. Deliberately unclamped: clamping would break the
+     ratio at the extremes, and 85% was the ask. Re-measure this if the face
+     or the tracking changes — it was 22.335vw under Jost at 80%. */
+  font-size:20.576vw;
   line-height:.92;letter-spacing:.06em;
   margin:0;white-space:nowrap;
   color:var(--on-image);
