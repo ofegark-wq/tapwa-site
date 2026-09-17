@@ -62,15 +62,11 @@ img,video{max-width:100%;display:block;}
    it would erase the header entirely, so that mode is dropped there. */
 .bar:not(.on-dark){mix-blend-mode:multiply;}
 .bar.on-dark{color:#F2EFEA;}
-.bar.on-dark .reel{color:rgba(242,239,234,.7);}
 .bar.on-dark .bar-cta{border-color:rgba(242,239,234,.45);}
 .bar.on-dark .bar-cta:hover{color:#fff;border-color:currentColor;}
 
 .mark{font-size:clamp(13px,1.6vw,17px);font-weight:500;letter-spacing:.44em;
   text-decoration:none;color:inherit;}
-.reel{margin:0;font-size:11px;letter-spacing:.28em;color:var(--on-image-soft);
-  text-transform:uppercase;display:none;transition:color .35s ease;}
-@media(min-width:820px){.reel{display:block;}}
 
 .bar-cta{
   font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:inherit;
@@ -141,7 +137,6 @@ img,video{max-width:100%;display:block;}
   inset:0;width:auto;transform:none;text-align:center;pointer-events:none;
   display:block;padding:0;
 }
-.copy.center .eyebrow{position:absolute;left:0;right:0;top:clamp(74px,11vh,120px);margin:0;}
 /* bottom:10% puts the BOX bottom on the plinth line, but the baseline sits
    0.1199em above that (measured, Galliard). The correction is in em so it
    scales with the font-size, which is itself in vw — otherwise the seating
@@ -197,7 +192,6 @@ img,video{max-width:100%;display:block;}
 }
 
 /* the small type travels over the same moving footage */
-.copy.center .eyebrow,
 .mark-foot .tagline,
 .mark-foot .cue{
   filter:drop-shadow(0 0 5px rgba(238,240,242,.92)) drop-shadow(0 0 1px rgba(238,240,242,.8));
@@ -248,7 +242,6 @@ h1.lede{font-weight:300;}
     left:0;right:auto;text-align:left;}
   .copy.right{right:auto;left:0;text-align:left;}
   .copy.center{inset:0;max-width:none;text-align:center;transform:none;padding:0;}
-  .copy.center .eyebrow{top:clamp(66px,9vh,96px);}
   .veil{background:linear-gradient(to top, rgba(238,240,242,.82) 0%, rgba(238,240,242,0) 46%);}
 }
 
