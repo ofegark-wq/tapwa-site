@@ -37,6 +37,7 @@
   var track = document.querySelector('.track');
   var bar = document.getElementById('progress');
   var copies = Array.prototype.slice.call(document.querySelectorAll('.copy'));
+  var wordmark = document.getElementById('wordmark');   // rides beat 0
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   /* ---- pick a source by screen width, before the browser starts loading ---- */
@@ -65,6 +66,11 @@
       copies[i].style.opacity = o.toFixed(3);
       // keep faded-out blocks out of the tab order and off screen readers
       copies[i].setAttribute('aria-hidden', o < 0.02 ? 'true' : 'false');
+      // the wordmark sits outside the beat blocks, so drive it from beat 0
+      if (i === 0 && wordmark) {
+        wordmark.style.opacity = o.toFixed(3);
+        wordmark.setAttribute('aria-hidden', o < 0.02 ? 'true' : 'false');
+      }
     }
   }
 
@@ -102,6 +108,7 @@
     // No scrubbing. Show the first frame, let every block read normally.
     video.removeAttribute('preload');
     copies.forEach(function (c) { c.style.opacity = 1; c.setAttribute('aria-hidden', 'false'); });
+    if (wordmark) { wordmark.style.opacity = 1; wordmark.setAttribute('aria-hidden', 'false'); }
   } else {
     video.addEventListener('loadedmetadata', start, { once: true });
     window.addEventListener('scroll', onScroll, { passive: true });

@@ -120,8 +120,9 @@ img,video{max-width:100%;display:block;}
    0.1155em above that (measured). The correction is in em so it scales with
    the font-size, which is itself in vw — otherwise the seating would drift
    with the viewport's aspect ratio. */
-.copy.center .wordmark{position:absolute;left:0;right:0;bottom:10%;
-  transform:translateY(.1155em);}
+.wordmark{position:absolute;left:0;right:0;bottom:10%;z-index:11;
+  transform:translateY(.1155em);opacity:0;pointer-events:none;
+  text-align:center;}   /* it used to inherit centring from .copy.center */
 .mark-foot{position:absolute;left:0;right:0;bottom:clamp(14px,2.4vh,30px);}
 .mark-foot .tagline{margin:0;}
 .mark-foot .cue{margin:12px 0 0;}
@@ -142,19 +143,29 @@ img,video{max-width:100%;display:block;}
   line-height:.92;letter-spacing:.06em;
   margin:0;white-space:nowrap;
   color:var(--on-image);
-  /* The footage moves under this text: pale sky, dark leather, mid-grey stone.
-     A pale halo keeps the dark stroke legible on all three. mix-blend-mode
-     difference was the tidier idea but it fails exactly where it is needed —
-     on a mid-grey backdrop it returns mid-grey. */
-  filter:
-    drop-shadow(0 0 7px rgba(238,240,242,.9))
-    drop-shadow(0 0 2px rgba(238,240,242,.75));
 }
 @supports (-webkit-text-stroke: 1px black){
   .wordmark{
     color:transparent;
     -webkit-text-stroke:clamp(1px,.19vw,3px) var(--on-image);
   }
+}
+
+/* ---------- inverted ink on the wordmark ----------
+   difference inverts the mark against whatever is behind it, so it can never
+   match its backdrop: pale where it crosses the leather, dark over sky and
+   water. Ink is white because difference against white returns 255-backdrop;
+   dark ink would return the backdrop almost unchanged.
+
+   Scoped to the wordmark ONLY. Applied to the whole beat it also caught the
+   caption, and a mid-grey backdrop returns mid-grey — the plinth is mid-grey,
+   so "Carried, not saved." disappeared. The small type keeps its dark ink and
+   pale halo, which measures 6.80 against the plinth.
+
+   The halo is dropped here: under difference it would invert too. */
+.wordmark{mix-blend-mode:difference;filter:none;}
+@supports (-webkit-text-stroke: 1px black){
+  .wordmark{-webkit-text-stroke-color:#fff;}
 }
 
 /* the small type travels over the same moving footage */
