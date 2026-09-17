@@ -242,6 +242,20 @@ h1.lede{font-weight:300;}
     left:0;right:auto;text-align:left;}
   .copy.right{right:auto;left:0;text-align:left;}
   .copy.center{inset:0;max-width:none;text-align:center;transform:none;padding:0;}
+
+  /* On a phone the plinth is barely in shot — the video is cropped to a narrow
+     centre strip — so seating the mark on it just buries it in the bag. Up to
+     the top instead, with the tagline directly under it. The offset below the
+     wordmark is 18.93vw because the box is font-size x line-height, and the
+     font-size is 20.576vw: it tracks the mark at any width rather than being a
+     number that only works on one phone.
+     The scroll cue stays at the bottom, where a scroll cue belongs. */
+  .wordmark{top:150px;bottom:auto;transform:none;}
+  .mark-foot{position:static;}
+  .mark-foot .tagline{position:absolute;left:0;right:0;
+    top:calc(150px + 18.93vw + 18px);margin:0;}
+  .mark-foot .cue{position:absolute;left:0;right:0;
+    bottom:clamp(22px,4vh,44px);margin:0;}
   .veil{background:linear-gradient(to top, rgba(238,240,242,.82) 0%, rgba(238,240,242,0) 46%);}
 }
 

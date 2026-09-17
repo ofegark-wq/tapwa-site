@@ -96,11 +96,36 @@
     bar.style.width = (p * 100).toFixed(2) + '%';
   }
 
+  /* ---- keeping a frame on screen ----
+     Mobile browsers evict a video's decoded frame when it scrolls out of view
+     or the tab is backgrounded, and leave the element blank — you see the
+     stage's own pale background through it. Assigning currentTime the value it
+     already holds is a no-op, so nothing brings the picture back.
+
+     Two parts: prime the decoder once so a frame exists at all, and nudge the
+     time whenever the page comes back, which forces a real seek and a repaint.
+     Both are no-ops on desktop, where the frame is never dropped. */
+  function primeDecoder() {
+    var p;
+    try { p = video.play(); } catch (e) { return; }
+    if (p && p.then) { p.then(function () { video.pause(); }, function () {}); }
+    else { video.pause(); }
+  }
+
+  function repaint() {
+    if (!duration) return;
+    // seek somewhere genuinely different; the loop chases back to target and
+    // seeks again, and it is that second seek that paints.
+    current = clamp(current + (current > 0.05 ? -0.01 : 0.01), 0, duration);
+    try { video.currentTime = current; } catch (e) {}
+  }
+
   function start() {
     duration = video.duration || 0;
     running = true;
     onScroll();
     current = target;
+    primeDecoder();
     requestAnimationFrame(loop);
   }
 
@@ -115,6 +140,17 @@
     window.addEventListener('resize', onScroll);
     // Safari sometimes needs a nudge before it will seek at all
     video.addEventListener('canplay', function () { video.pause(); }, { once: true });
+
+    // coming back to the tab, or back up the page, after the frame was dropped
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) repaint();
+    });
+    window.addEventListener('pageshow', repaint);
+    // iOS may withhold decoding until the user has touched the page once
+    window.addEventListener('touchstart', function once() {
+      primeDecoder();
+      window.removeEventListener('touchstart', once);
+    }, { passive: true });
   }
   /* ---- header ink over the dark photographic bands ----
      The bar is dark ink multiplied into a pale photograph. Some regions below
