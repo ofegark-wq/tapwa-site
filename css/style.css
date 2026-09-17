@@ -80,7 +80,12 @@ img,video{max-width:100%;display:block;}
   position:absolute;inset:0;pointer-events:none;
   background:
     linear-gradient(to right, rgba(238,240,242,.66) 0%, rgba(238,240,242,0) 34%),
-    linear-gradient(to left,  rgba(238,240,242,.66) 0%, rgba(238,240,242,0) 34%);
+    linear-gradient(to left,  rgba(238,240,242,.66) 0%, rgba(238,240,242,0) 34%),
+    /* top and bottom wash for the centred beat: the eyebrow and the caption sit
+       where the bag passes through, and the footage moves as you scroll, so
+       tuning their position against a single frame does not hold. */
+    linear-gradient(to bottom, rgba(238,240,242,.62) 0%, rgba(238,240,242,0) 17%),
+    linear-gradient(to top,    rgba(238,240,242,.68) 0%, rgba(238,240,242,0) 19%);
 }
 
 .progress{
@@ -100,6 +105,70 @@ img,video{max-width:100%;display:block;}
 }
 .copy.left{left:0;}
 .copy.right{right:0;text-align:right;}
+/* The centred beat is placed against the FOOTAGE, not against itself: the
+   eyebrow sits up in the pale sky, the wordmark rests its baseline on the
+   plinth the way the bag does, and the caption sits on the plinth below it.
+   The plinth edge was measured off the video at 90% of stage height; the crop
+   is horizontal-only at every viewport narrower than the clip (1.92:1), so
+   that fraction holds everywhere. */
+.copy.center{
+  inset:0;width:auto;transform:none;text-align:center;pointer-events:none;
+  display:block;padding:0;
+}
+.copy.center .eyebrow{position:absolute;left:0;right:0;top:clamp(74px,11vh,120px);margin:0;}
+/* bottom:10% puts the BOX bottom on the plinth line, but the baseline sits
+   0.1155em above that (measured). The correction is in em so it scales with
+   the font-size, which is itself in vw — otherwise the seating would drift
+   with the viewport's aspect ratio. */
+.copy.center .wordmark{position:absolute;left:0;right:0;bottom:10%;
+  transform:translateY(.1155em);}
+.mark-foot{position:absolute;left:0;right:0;bottom:clamp(14px,2.4vh,30px);}
+.mark-foot .tagline{margin:0;}
+.mark-foot .cue{margin:12px 0 0;}
+
+/* ---------- the outlined wordmark ----------
+   Hairline outline, no fill, sitting over the footage. The reference for this
+   strokes in white over near-black footage; ours is the inverse, because the
+   hero is snow and pale water — a light stroke would simply disappear.
+   colour first, stroke second: without -webkit-text-stroke a transparent fill
+   would render the brand name invisible, so the solid colour is the fallback. */
+.wordmark{
+  font-family:var(--display);font-weight:500;
+  /* 80% of the viewport, exactly. This face renders TAPWA at 3.5818x its
+     font-size (measured, and constant because the tracking is in em), so
+     0.80 / 3.5818 = 0.22335. Deliberately unclamped: clamping would break the
+     ratio at the extremes, and 80% was the ask. */
+  font-size:22.335vw;
+  line-height:.92;letter-spacing:.06em;
+  margin:0;white-space:nowrap;
+  color:var(--on-image);
+  /* The footage moves under this text: pale sky, dark leather, mid-grey stone.
+     A pale halo keeps the dark stroke legible on all three. mix-blend-mode
+     difference was the tidier idea but it fails exactly where it is needed —
+     on a mid-grey backdrop it returns mid-grey. */
+  filter:
+    drop-shadow(0 0 7px rgba(238,240,242,.9))
+    drop-shadow(0 0 2px rgba(238,240,242,.75));
+}
+@supports (-webkit-text-stroke: 1px black){
+  .wordmark{
+    color:transparent;
+    -webkit-text-stroke:clamp(1px,.19vw,3px) var(--on-image);
+  }
+}
+
+/* the small type travels over the same moving footage */
+.copy.center .eyebrow,
+.mark-foot .tagline,
+.mark-foot .cue{
+  filter:drop-shadow(0 0 5px rgba(238,240,242,.92)) drop-shadow(0 0 1px rgba(238,240,242,.8));
+}
+
+.tagline{
+  font-family:var(--display);font-size:clamp(10px,1.1vw,13px);
+  letter-spacing:.34em;text-transform:uppercase;
+  color:var(--on-image);margin:26px 0 0;
+}
 
 .eyebrow{
   font-family:var(--display);font-size:11px;letter-spacing:.34em;
@@ -132,6 +201,8 @@ h1.lede{font-weight:300;}
   .copy{width:auto;max-width:min(36ch,88vw);top:auto;bottom:13%;transform:none;
     left:0;right:auto;text-align:left;}
   .copy.right{right:auto;left:0;text-align:left;}
+  .copy.center{inset:0;max-width:none;text-align:center;transform:none;padding:0;}
+  .copy.center .eyebrow{top:clamp(66px,9vh,96px);}
   .veil{background:linear-gradient(to top, rgba(238,240,242,.82) 0%, rgba(238,240,242,0) 46%);}
 }
 
