@@ -14,14 +14,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
 
-<header class="bar">
+<a class="skip" href="#crescent">Skip the hero</a>
+
+<header class="bar" id="bar">
   <a class="mark" href="#top">TAPWA</a>
   <p class="reel">Reel 01 — The Crescent</p>
-  <p class="pron">TAP-wah</p>
+  <a class="bar-cta" href="#enquire">Enquire</a>
 </header>
 
 <!-- The track is a tall spacer. The stage sticks to the viewport while you
@@ -65,17 +67,98 @@
   </div>
 </main>
 
-<section class="after" id="enquire">
-  <h2>The Crescent</h2>
-  <p>A half-moon shoulder bag in full-grain pebbled leather, with a padded top handle and a detachable crossbody strap. Made in a run of fifty.</p>
-  <p class="spec">Full-grain leather · Hand-painted edges · Gold-tone hardware · Designed in Canada</p>
+<!-- ================= 02 · the product ================= -->
+<section class="chapter" id="crescent" data-tone="dark">
+  <figure class="band" data-ink="light">
+    <img src="assets/crescent-dusk-1800.jpg"
+         srcset="assets/crescent-dusk-900.jpg 900w, assets/crescent-dusk-1800.jpg 1800w"
+         sizes="100vw" width="1800" height="1011" loading="lazy" decoding="async"
+         alt="The Crescent in dark brown full-grain leather, photographed against a desert escarpment at dusk.">
+  </figure>
+
+  <div class="inner split" data-ink="light">
+    <div class="split-say">
+      <p class="eyebrow">Reel 01 — The Crescent</p>
+      <h2 class="head">Half-moon.<br>Padded handle.<br>Nothing spare.</h2>
+      <p class="prose">A shoulder bag the shape of a held breath — cut so it sits where your arm already rests. Full-grain pebbled leather that darkens where you touch it, and keeps the mark.</p>
+    </div>
+
+    <dl class="specs">
+      <div><dt>Material</dt><dd>Full-grain pebbled leather</dd></div>
+      <div><dt>Handle</dt><dd>Padded top handle</dd></div>
+      <div><dt>Strap</dt><dd>Detachable crossbody</dd></div>
+      <div><dt>Edges</dt><dd>Painted and burnished by hand</dd></div>
+      <div><dt>Hardware</dt><dd>Gold-tone, set flush to the body</dd></div>
+      <div><dt>Origin</dt><dd>Designed in Canada</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ================= 03 · the making ================= -->
+<section class="chapter pale" id="made">
+  <div class="inner">
+    <p class="eyebrow">Made</p>
+    <h2 class="head wide">One hide. Cut by hand.</h2>
+    <p class="prose lead">The pattern is cut from a single hide, so the grain runs continuous from the front of the bag to the back. It is slower, it wastes more leather, and it is the only way the thing looks like one object instead of several.</p>
+
+    <ol class="points">
+      <li>
+        <p class="num">01</p>
+        <h3>The cut</h3>
+        <p>One hide per bag. The pattern is laid by eye, around the marks the animal already had, so no two bodies fall the same way.</p>
+      </li>
+      <li>
+        <p class="num">02</p>
+        <h3>The edge</h3>
+        <p>Every edge is painted and burnished by hand until it is closed and hard. This is the part that fails first on a cheap bag, and the part nobody photographs.</p>
+      </li>
+      <li>
+        <p class="num">03</p>
+        <h3>The hardware</h3>
+        <p>Gold-tone, set flush to the body. Nothing stands proud of the leather, so there is nothing to catch and nothing to wear through.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= 04 · the name ================= -->
+<section class="chapter" id="name" data-tone="dark">
+  <figure class="band">
+    <img src="assets/crescent-dune-1800.jpg"
+         srcset="assets/crescent-dune-900.jpg 900w, assets/crescent-dune-1800.jpg 1800w"
+         sizes="100vw" width="1800" height="1011" loading="lazy" decoding="async"
+         alt="The Crescent on a stone plinth beneath a white arch, with sand dunes and acacia trees beyond.">
+  </figure>
+
+  <div class="inner narrow" data-ink="light">
+    <p class="eyebrow">Tapwa — of God</p>
+    <h2 class="head">Named for its maker.</h2>
+    <p class="prose">Tapwa is a Bwatiye name from Adamawa, in the north-east of Nigeria. It means <em>of God</em>. It was carried to Canada by the woman whose work this is, and it is the name she puts on the bags because it is the one she was given.</p>
+    <p class="prose">The label is stamped, not printed. It is the only word on the bag.</p>
+    <p class="pron-note"><span>TAP-wah</span> · Bwatiye, Adamawa State, Nigeria</p>
+  </div>
+</section>
+
+<!-- ================= 05 · the run, and the ask ================= -->
+<section class="chapter pale" id="enquire">
+  <div class="inner narrow">
+    <p class="eyebrow">A run of fifty</p>
+    <h2 class="head">Fifty bags, then the pattern is retired.</h2>
+    <p class="prose lead">The Crescent is made in a run of fifty. There is no restock and no second colourway — when the fifty are gone the pattern goes in a drawer, and the next one is a different shape.</p>
+    <p class="prose">If you want one, write. Tell me your name and where you are, and I will tell you what is left and what it costs.</p>
+
+    <!-- TODO: swap this for the real TAPWA address before going live. -->
+    <a class="cta big" href="mailto:hello@tapwa.ca?subject=The%20Crescent%20%E2%80%94%20enquiry">Enquire about The Crescent</a>
+    <p class="spec">hello@tapwa.ca</p>
+  </div>
 </section>
 
 <footer class="foot">
   <p class="mark-sm">TAPWA</p>
   <p class="meaning">of God — a Bwatiye name from Adamawa, Nigeria</p>
+  <p class="meaning">Designed in Canada</p>
 </footer>
 
-<script src="js/scroll.js"></script>
+<script src="js/scroll.js?v=3"></script>
 </body>
 </html>

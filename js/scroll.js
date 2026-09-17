@@ -14,12 +14,14 @@
  *   p 0.90 – 1.00  bag swings LEFT   → copy goes right
  *
  * Re-time by editing BEATS. Each is [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd].
+ * Beat 0 fades in from a negative start so the h1 is already at full opacity
+ * when the page loads — otherwise the landing view has no headline on it.
  */
 (function () {
   'use strict';
 
   var BEATS = [
-    [0.00, 0.04, 0.11, 0.17],   // 0 — "Carried, not saved."   left
+    [-0.04, 0.00, 0.11, 0.17],  // 0 — "Carried, not saved."   left (lit at rest)
     [0.21, 0.28, 0.39, 0.45],   // 1 — craft                   right
     [0.47, 0.53, 0.61, 0.66],   // 2 — price                   left
     [0.68, 0.73, 0.79, 0.83],   // 3 — the name                right  (bag is left)
@@ -106,5 +108,31 @@
     window.addEventListener('resize', onScroll);
     // Safari sometimes needs a nudge before it will seek at all
     video.addEventListener('canplay', function () { video.pause(); }, { once: true });
+  }
+  /* ---- header ink over the dark photographic bands ----
+     The bar is dark ink multiplied into a pale photograph. Some regions below
+     are near-black, so the bar would vanish there. Flip it to light whenever a
+     region marked data-ink="light" is under the top strip of the viewport.
+     Tagging is per-region, not per-section: the dune band is white sand inside
+     an otherwise dark chapter, so it deliberately carries no tag. Runs in both
+     motion modes — it has nothing to do with scrubbing. */
+  var barEl = document.getElementById('bar');
+  var darkBands = document.querySelectorAll('[data-ink="light"]');
+
+  if (barEl && darkBands.length && 'IntersectionObserver' in window) {
+    // Track WHICH regions are lit, not how many. The observer's first callback
+    // reports every observed element at once, so a running +1/-1 tally nets
+    // negative and sticks there; a set is idempotent whatever order they arrive.
+    var lit = [];
+    var watch = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        var at = lit.indexOf(entries[i].target);
+        if (entries[i].isIntersecting) { if (at < 0) lit.push(entries[i].target); }
+        else if (at > -1) { lit.splice(at, 1); }
+      }
+      barEl.classList.toggle('on-dark', lit.length > 0);
+    }, { rootMargin: '0px 0px -94% 0px' });       // only the top strip counts
+
+    for (var k = 0; k < darkBands.length; k++) watch.observe(darkBands[k]);
   }
 })();

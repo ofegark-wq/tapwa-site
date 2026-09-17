@@ -17,12 +17,51 @@ python3 -m http.server 8000
 ```
 index.html        markup and all the copy
 css/style.css     palette, type, layout
-js/scroll.js      the scroll → video mapping, and the copy timings
+js/scroll.js      the scroll → video mapping, the copy timings, the header ink
 assets/
   hero-scrub.mp4         1344×700, desktop
   hero-scrub-mobile.mp4  854 wide, served under 820px
   poster.jpg             first frame, shown before the video loads
+  crescent-dusk-*.jpg    band image for the product chapter (1800w / 900w)
+  crescent-dune-*.jpg    band image for the name chapter  (1800w / 900w)
 ```
+
+The stylesheet and script are linked with a `?v=N` query. Bump it when you
+change either file, or browsers will keep serving the cached copy.
+
+## The page
+
+The scroll hero opens, then four chapters run beneath it:
+
+| # | id | ground | holds |
+|---|---|---|---|
+| 02 | `#crescent` | dark | dusk band, headline, spec table |
+| 03 | `#made` | pale | the making, three numbered points |
+| 04 | `#name` | dark | dune band, the Adamawa story |
+| 05 | `#enquire` | pale | run of fifty, mailto CTA |
+
+### Header ink
+
+The bar is dark ink multiplied into a pale photograph, which disappears over
+the dark chapters. Any region that is dark *at the top of the screen* carries
+`data-ink="light"`, and an IntersectionObserver watching the top 6% of the
+viewport flips the bar to light while one is under it.
+
+Tag regions, not sections. The dune band is white sand sitting inside an
+otherwise dark chapter, so it deliberately carries no tag — tagging its whole
+section put light ink on white sand.
+
+## The enquiry address
+
+`index.html` ships a placeholder:
+
+```
+mailto:hello@tapwa.ca
+```
+
+**Swap this for the real address before going live.** It appears twice, both in
+the `#enquire` section: the CTA `href` and the line of text under it. The header
+and hero "Enquire" links are anchors to that section, so they need no change.
 
 ## Changing the timing
 
@@ -62,6 +101,7 @@ Re-run that command if you replace the footage. `-movflags +faststart` matters t
 ## Known limits
 
 - **iOS Safari** is unreliable at scrubbing MP4 even encoded like this. If it stutters on a phone, the bulletproof route is exporting frames as numbered JPEGs and drawing them to a `<canvas>`.
+- **The Enquire link is a placeholder** — see above.
 - **Clip 3 drifts.** In the last four seconds the snow thins and the treeline shifts — the video model regenerated the scene rather than moving through it. Regenerate that clip with a tighter camera arc if it bothers you.
 - The footage is 1344×700. On a large monitor the hero is slightly soft.
 
