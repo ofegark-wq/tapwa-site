@@ -176,8 +176,12 @@ img,video{max-width:100%;display:block;}
 }
 
 .tagline{
-  font-family:var(--display);font-size:clamp(10px,1.1vw,13px);
-  letter-spacing:.34em;text-transform:uppercase;
+  font-family:var(--display);font-weight:400;
+  /* was clamp(10px,1.1vw,13px) — ~11px on a laptop, too small to read over
+     moving footage. Tracking eased off a little as it grew, or the line gets
+     wide enough to fight the wordmark above it. */
+  font-size:clamp(13px,1.5vw,19px);
+  letter-spacing:.26em;text-transform:uppercase;
   color:var(--on-image);margin:26px 0 0;
 }
 
